@@ -8,14 +8,14 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Camera
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - MapBorders
+  - Hero
+  - Building
+  - Obstacle
+  - Grass
   - 
   - 
   - 
@@ -38,6 +38,27 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 3332546947
+    locked: 0
+  - name: Ground
+    uniqueID: 3580295781
+    locked: 0
+  - name: Buildings
+    uniqueID: 4171799855
+    locked: 0
+  - name: Grass
+    uniqueID: 1509475823
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Obstacles
+    uniqueID: 503339345
+    locked: 0
+  - name: Above Ground
+    uniqueID: 1671802579
+    locked: 0
+  - name: Foreground
+    uniqueID: 1254833625
     locked: 0
