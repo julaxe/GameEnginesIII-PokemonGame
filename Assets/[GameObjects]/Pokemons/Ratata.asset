@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28daca82049445242bdba817003f485a, type: 3}
+  m_Name: Ratata
+  m_EditorClassIdentifier: 
+  image: {fileID: 21300000, guid: b619a0812a8d7c44494204d83d62ea7a, type: 3}
+  pokemonName: Ratata
+  type: 0
+  hp: 100
+  attack: 20
+  defense: 30
+  speed: 100
+  level: 5
+  abilities:
+  - {fileID: 11400000, guid: ec53f3a4eb70be0449bbc8c9308ccd76, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

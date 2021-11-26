@@ -15,10 +15,13 @@ public class CharacterMovement : MonoBehaviour
 
     private BattleManager battleManager;
 
+    private Character character;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         battleManager = GameObject.FindObjectOfType<BattleManager>();
+        character = GetComponent<Character>();
     }
 
     // Update is called once per frame
@@ -34,7 +37,7 @@ public class CharacterMovement : MonoBehaviour
             {
                 if(Random.Range(0,100) == 0) // 1/100 chance every frame to encounter a battle
                 {
-                    battleManager.StartBattle();
+                    //battleManager.StartBattle();
                 }
             }
         }
@@ -56,4 +59,11 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.transform.CompareTag("Enemy"))
+        {
+            battleManager.StartBattle(character, collision.gameObject.GetComponent<Character>()) ;
+        }
+    }
 }
