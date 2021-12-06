@@ -29,8 +29,7 @@ public class BattleAnimator : MonoBehaviour
         string currentClip = QueueClips[index];
         
         animator.Play(currentClip);
-
-        while (animator.GetCurrentAnimatorStateInfo(0).IsName(currentClip))
+        while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
         {
             yield return null;
         }
@@ -42,8 +41,8 @@ public class BattleAnimator : MonoBehaviour
         animator = GetComponent<Animator>();
         _character1 = character1;
         _character2 = character2;
-        QueueClips.Add("SlideInPlayers");
         QueueClips.Add("ShowBattle");
+        QueueClips.Add("SlideInPlayers");
         StartCoroutine(QueueAnimation(0));
     }
 
