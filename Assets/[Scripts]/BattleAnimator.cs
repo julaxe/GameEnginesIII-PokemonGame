@@ -11,7 +11,7 @@ public class BattleAnimator : MonoBehaviour
     private Character _character2;
     public Image ImageP1;
     public Image ImageP2;
-
+    public List<string> QueueClips;
     
     public TMPro.TextMeshProUGUI PokemonName1;
     public TMPro.TextMeshProUGUI PokemonName2;
@@ -19,35 +19,56 @@ public class BattleAnimator : MonoBehaviour
     public TMPro.TextMeshProUGUI PokemonLevel2;
 
 
+    IEnumerator QueueAnimation(int index)
+    {
+        if (index >= QueueClips.Count)
+        {
+            yield break;
+        }
+
+        string currentClip = QueueClips[index];
+        
+        animator.Play(currentClip);
+
+        while (animator.GetCurrentAnimatorStateInfo(0).IsName(currentClip))
+        {
+            yield return null;
+        }
+
+        StartCoroutine(QueueAnimation(index + 1));
+    }
     public void  StartAnimation(Character character1, Character character2)
     {
         animator = GetComponent<Animator>();
-        if(Time.timeScale == 0.0f)
-        {
-            animator.SetBool("endBattle", false);
-        }
         _character1 = character1;
         _character2 = character2;
+        QueueClips.Add("SlideInPlayers");
+        QueueClips.Add("ShowBattle");
+        StartCoroutine(QueueAnimation(0));
+    }
+
+    public void IntroduceFirstPokemons()
+    {
         
     }
+    
 
     public void SetCharacters()
     {
         ImageP1.sprite = _character1.sprite;
         ImageP2.sprite = _character2.sprite;
-
     }
     public void ChangePokemonCharacter2()
     {
-        ImageP2.sprite = _character2.pokemons[0].image;
-        PokemonLevel2.text = "Lv" + _character2.pokemons[0].level.ToString();
-        PokemonName2.text = _character2.pokemons[0].pokemonName;
+        ImageP2.sprite = _character2.ActivePokemon.image;
+        PokemonLevel2.text = "Lv" + _character2.ActivePokemon.level.ToString();
+        PokemonName2.text = _character2.ActivePokemon.pokemonName;
     }
     public void ChangePokemonCharacter1()
     {
-        ImageP1.sprite = _character1.pokemons[0].image;
-        PokemonLevel1.text = "Lv" + _character1.pokemons[0].level.ToString();
-        PokemonName1.text = _character1.pokemons[0].pokemonName;
+        ImageP1.sprite = _character1.ActivePokemon.image;
+        PokemonLevel1.text = "Lv" + _character1.ActivePokemon.level.ToString();
+        PokemonName1.text = _character1.ActivePokemon.pokemonName;
     }
     public void ResumeGame()
     {
@@ -59,6 +80,6 @@ public class BattleAnimator : MonoBehaviour
 
     public void EndBattle()
     {
-        animator.SetBool("endBattle", true);
+        //animator.SetBool("endBattle", true);
     }
 }
