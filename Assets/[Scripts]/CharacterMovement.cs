@@ -14,7 +14,7 @@ public class CharacterMovement : MonoBehaviour
     private bool onGrass = false;
 
     private BattleManager battleManager;
-
+    
     private Character character;
 
     void Start()
@@ -63,7 +63,8 @@ public class CharacterMovement : MonoBehaviour
     {
         if(collision.transform.CompareTag("Enemy"))
         {
-            battleManager.StartBattle(character, collision.gameObject.GetComponent<Character>()) ;
+            battleManager.SetCharacters(character, collision.gameObject.GetComponent<Character>()) ;
+            battleManager.StartBattle();
         }
     }
 }

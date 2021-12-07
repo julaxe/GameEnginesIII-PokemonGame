@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -18,40 +19,53 @@ public class BattleAnimator : MonoBehaviour
     public TMPro.TextMeshProUGUI PokemonLevel1;
     public TMPro.TextMeshProUGUI PokemonLevel2;
 
+    public bool isPlaying = false;
+
 
     IEnumerator QueueAnimation(int index)
     {
+        isPlaying = true;
         if (index >= QueueClips.Count)
         {
+            isPlaying = false;
             yield break;
         }
 
         string currentClip = QueueClips[index];
         
         animator.Play(currentClip);
-        while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
-        {
-            yield return null;
-        }
+
+        yield return new WaitForSecondsRealtime(animator.GetCurrentAnimatorStateInfo(0).length);
+        
 
         StartCoroutine(QueueAnimation(index + 1));
     }
-    public void  StartAnimation(Character character1, Character character2)
+    
+    
+    public bool IsQueuePlaying()
+    {
+        return isPlaying;
+    }
+    public void  StartBattleAnimator(Character character1, Character character2)
     {
         animator = GetComponent<Animator>();
         _character1 = character1;
         _character2 = character2;
-        QueueClips.Add("ShowBattle");
-        QueueClips.Add("SlideInPlayers");
+    }
+
+    public void StartQueueAnimation(string[] animations)
+    {
+        QueueClips.Clear();
+        foreach (var animation in animations)
+        {
+            QueueClips.Add(animation);
+        }
         StartCoroutine(QueueAnimation(0));
     }
-
-    public void IntroduceFirstPokemons()
-    {
-        
-    }
     
-
+    
+    
+    //call by animation events
     public void SetCharacters()
     {
         ImageP1.sprite = _character1.sprite;
