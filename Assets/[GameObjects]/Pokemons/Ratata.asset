@@ -16,12 +16,14 @@ MonoBehaviour:
   pokemonName: Ratata
   type: 0
   hp: 100
+  maxHp: 100
   attack: 20
   defense: 30
   speed: 100
   level: 5
   abilities:
   - {fileID: 11400000, guid: ec53f3a4eb70be0449bbc8c9308ccd76, type: 2}
+  - {fileID: 11400000, guid: 980d2f3fbed95594c815e39f982a0822, type: 2}
+  - {fileID: 11400000, guid: 3558a51539998e4419d17ffed6bd8620, type: 2}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  currentAbility: {fileID: 0}

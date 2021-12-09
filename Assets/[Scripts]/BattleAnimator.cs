@@ -13,6 +13,8 @@ public class BattleAnimator : MonoBehaviour
     public Image ImageP1;
     public Image ImageP2;
     public List<string> QueueClips;
+    public bool _isUpdatingHP = false;
+    public float _HPUpdatingSpeed = 0.01f;
     
     public TMPro.TextMeshProUGUI PokemonName1;
     public TMPro.TextMeshProUGUI PokemonName2;
@@ -62,8 +64,38 @@ public class BattleAnimator : MonoBehaviour
         }
         StartCoroutine(QueueAnimation(0));
     }
-    
-    
+
+    public bool IsUpdatingHP()
+    {
+        return _isUpdatingHP;
+    }
+    public void UpdateCharacter1HP(int damage)
+    {
+        GameObject character1HP = transform
+            .Find("BattleHeaders/PlayerHeader/PokemonHealth/HealthBar/BlackBackground/Health").gameObject;
+        StartCoroutine(UpdateHP(character1HP, damage));
+
+    }
+    public void UpdateCharacter2HP(int damage)
+    {
+        GameObject character2HP = transform
+            .Find("BattleHeaders/EnemyHeader/PokemonHealth/HealthBar/BlackBackground/Health").gameObject;
+        StartCoroutine(UpdateHP(character2HP, damage));
+
+    }
+    IEnumerator UpdateHP(GameObject CharacterHp, int damage)
+    {
+        _isUpdatingHP = true;
+        for(int i = 0; i < damage; i++)
+        {
+            Vector3 newPosition = CharacterHp.transform.localPosition;
+            newPosition.x -= 1;
+            CharacterHp.transform.localPosition = newPosition;
+            yield return new WaitForSecondsRealtime(_HPUpdatingSpeed);
+        }
+
+        _isUpdatingHP = false;
+    }
     
     //call by animation events
     public void SetCharacters()
@@ -76,12 +108,19 @@ public class BattleAnimator : MonoBehaviour
         ImageP2.sprite = _character2.ActivePokemon.image;
         PokemonLevel2.text = "Lv" + _character2.ActivePokemon.level.ToString();
         PokemonName2.text = _character2.ActivePokemon.pokemonName;
+        GameObject character2HP = transform
+            .Find("BattleHeaders/EnemyHeader/PokemonHealth/HealthBar/BlackBackground/Health").gameObject;
+        character2HP.transform.localPosition = Vector3.zero;
     }
     public void ChangePokemonCharacter1()
     {
         ImageP1.sprite = _character1.ActivePokemon.image;
         PokemonLevel1.text = "Lv" + _character1.ActivePokemon.level.ToString();
         PokemonName1.text = _character1.ActivePokemon.pokemonName;
+        GameObject character1HP = transform
+            .Find("BattleHeaders/PlayerHeader/PokemonHealth/HealthBar/BlackBackground/Health").gameObject;
+        character1HP.transform.localPosition = Vector3.zero;
+        
     }
     public void ResumeGame()
     {

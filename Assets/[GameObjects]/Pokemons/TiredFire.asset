@@ -16,6 +16,7 @@ MonoBehaviour:
   pokemonName: TiredFire
   type: 2
   hp: 150
+  maxHp: 150
   attack: 20
   defense: 40
   speed: 80
@@ -25,3 +26,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 980d2f3fbed95594c815e39f982a0822, type: 2}
   - {fileID: 0}
   - {fileID: 0}
+  currentAbility: {fileID: 0}

@@ -10,11 +10,10 @@ public class MenuState : IStateBase
     private Button Ability1Button, Ability2Button, Ability3Button, Ability4Button;
     private GameObject abilityInfoGameObject;
     private TextMeshProUGUI PPCountText, TypeText;
-    private Character character1;
+    
     public override void OnEnterState(BattleManager battleManager)
     {
         base.OnEnterState(battleManager);
-        character1 = _battleManager.GetCharacter1();
         _battleManager.ShowBattleOptions();
         Debug.Log("Menu state entered");
 
@@ -88,6 +87,15 @@ public class MenuState : IStateBase
         TypeText.text = "TYPE/" + ability.type;
     }
 
+    public void OnClickAbility(int number)
+    {
+        character1.ActivePokemon.currentAbility = character1.ActivePokemon.abilities[number];
+        if (character1.ActivePokemon.currentAbility != null)
+        {
+            //go to battle
+            _battleManager.GetBattleStateMachine().ChangeStateByKey("BattleState");
+        }
+    }
 
     private void InitializeMenuOptionsButtons()
     {
@@ -112,10 +120,18 @@ public class MenuState : IStateBase
         Ability4Button = _battleManager.GetBattleChatBox().GetAbiltiesOptions().transform
             .Find("LeftSide/Options/Ability4Button").GetComponent<Button>();
 
+        //initialize ability info UI
         abilityInfoGameObject = _battleManager.GetBattleChatBox().GetAbiltiesOptions().transform
             .Find("RightSide/AbilityInfo").gameObject;
         PPCountText = abilityInfoGameObject.transform.Find("PPCount/Text").GetComponent<TextMeshProUGUI>();
         TypeText = abilityInfoGameObject.transform.Find("Type/Text").GetComponent<TextMeshProUGUI>();
+        
+        //add function to onClick event to the buttons.
+        Ability1Button.onClick.AddListener(delegate{OnClickAbility(0);});
+        Ability2Button.onClick.AddListener(delegate{OnClickAbility(1);});
+        Ability3Button.onClick.AddListener(delegate{OnClickAbility(2);});
+        Ability4Button.onClick.AddListener(delegate{OnClickAbility(3);});
+        
     }
     
 }

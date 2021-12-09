@@ -43,13 +43,57 @@ public class BattleManager : MonoBehaviour
     {
         return _character1;
     }
+    public Character GetCharacter2()
+    {
+        return _character2;
+    }
     
     public void SetCharacters(Character character1, Character character2)
     {
         _character1 = character1;
         _character2 = character2;
     }
-    
+
+    public string GetTypeEffectiveness(Type type1, Type type2)
+    {
+        string effectiveness = "";
+        if (type1 == Type.Fire)
+        {
+            if (type2 == Type.Grass)
+            {
+                effectiveness =  "Super Effective";
+            }
+            else if (type2 == Type.Water)
+            {
+                effectiveness = "Not very effective";
+            }
+        }
+        else if (type1 == Type.Water)
+        {
+            if (type2 == Type.Fire)
+            {
+                effectiveness =  "Super Effective";
+            }
+            else if (type2 == Type.Grass)
+            {
+                effectiveness = "Not very effective";
+            }
+        }
+        else if (type1 == Type.Grass)
+        {
+            if (type2 == Type.Water)
+            {
+                effectiveness =  "Super Effective";
+            }
+            else if (type2 == Type.Fire)
+            {
+                effectiveness = "Not very effective";
+            }
+        }
+
+        return effectiveness;
+
+    }
     public void StartBattle()
     {
         //first pause the game

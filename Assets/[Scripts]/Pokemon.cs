@@ -9,11 +9,13 @@ public class Pokemon : ScriptableObject
     public string pokemonName;
     public Type type;
     public int hp;
+    public int maxHp;
     public int attack;
     public int defense;
     public int speed;
     public int level = 5;
     public Ability[] abilities = new Ability[4];
+    public Ability currentAbility = null;
 }
 
 public enum Type{

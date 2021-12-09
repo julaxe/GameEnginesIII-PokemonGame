@@ -43,5 +43,10 @@ public class StateManager : MonoBehaviour
    {
       availableStates.Add("StartState",new StartState());
       availableStates.Add("MenuState",new MenuState());
+      availableStates.Add("BattleState",new BattleState());
+      availableStates.Add("ChangePokemonState",new ChangePokemonState());
+      availableStates.Add("RunState",new RunState());
+      availableStates.Add("InsultState",new InsultState());
+      availableStates.Add("FinalState",new FinalState());
    }
 }

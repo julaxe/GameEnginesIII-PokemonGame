@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    public Pokemon[] pokemons = new Pokemon[6];
+    [SerializeField] private Pokemon[] InitPokemons = new Pokemon[6];
+    [HideInInspector] public  Pokemon[] pokemons = new Pokemon[6];
     public Pokemon ActivePokemon;
     public string CharacterName;
     public bool NPC = false;
@@ -14,6 +15,13 @@ public class Character : MonoBehaviour
 
     private void Start()
     {
+        for (int i = 0; i < 6; i++)
+        {
+            if (InitPokemons[i] != null)
+            {
+                pokemons[i] = Instantiate(InitPokemons[i]);
+            }
+        }
         ActivePokemon = pokemons[0];
     }
 }
