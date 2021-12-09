@@ -1,1 +1,1 @@
-{"PlayerPosition":{"x":0.3249110281467438,"y":-4.1383771896362309,"z":0.0},"CameraPosition":{"x":0.3232719302177429,"y":-4.128066539764404,"z":-10.0}}
+{"pokemons":[{"instanceID":26216},{"instanceID":26214},{"instanceID":0},{"instanceID":0},{"instanceID":0},{"instanceID":0}],"ActivePokemon":{"instanceID":26216},"CharacterName":"Julian","NPC":false,"sprite":{"instanceID":26306},"PlayerPosition":{"x":-1.8357570171356202,"y":-3.551938056945801,"z":0.0},"CameraPosition":{"x":-1.1582307815551758,"y":-3.936493158340454,"z":-10.0}}
