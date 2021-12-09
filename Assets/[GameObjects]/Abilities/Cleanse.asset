@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 931d28b4757d0c1408337345cf93e3ed, type: 3}
-  m_Name: QuickAttack
+  m_Name: Cleanse
   m_EditorClassIdentifier: 
-  abilityName: QUICK ATTACK
+  abilityName: Cleanse
   type: 0
-  damage: 40
+  damage: 0
   accuracy: 100
-  maxPP: 30
-  pp: 30
-  Effect: {fileID: 11400000, guid: 04415320c79cf5d44a6ea6b844516e68, type: 2}
+  maxPP: 5
+  pp: 5
+  Effect: {fileID: 11400000, guid: d4c2c602c37fdeb4087a5214acae157e, type: 2}

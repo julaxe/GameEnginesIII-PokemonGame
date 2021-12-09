@@ -11,4 +11,7 @@ public class Ability : ScriptableObject
     public int accuracy;
     public int maxPP;
     public int pp;
+    public AbillitiesEffect Effect;
 }
+
+

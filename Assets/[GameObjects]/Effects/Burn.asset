@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 931d28b4757d0c1408337345cf93e3ed, type: 3}
-  m_Name: QuickAttack
+  m_Script: {fileID: 11500000, guid: f37d92d019a23034798957a1f08807a6, type: 3}
+  m_Name: Burn
   m_EditorClassIdentifier: 
-  abilityName: QUICK ATTACK
-  type: 0
-  damage: 40
-  accuracy: 100
-  maxPP: 30
-  pp: 30
-  Effect: {fileID: 11400000, guid: 04415320c79cf5d44a6ea6b844516e68, type: 2}
+  name: Burn
+  description: Will Burn the enemy every round
+  chanceOfEffectApplied: 50
+  durationInRounds: 3
+  damageOverRound: 10
+  effectType: 1
+  affectsTheEnemy: 1

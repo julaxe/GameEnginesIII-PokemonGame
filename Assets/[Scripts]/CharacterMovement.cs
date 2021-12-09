@@ -17,6 +17,7 @@ public class CharacterMovement : MonoBehaviour
     
     private Character character;
 
+    private bool isWalking = false;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -40,6 +41,19 @@ public class CharacterMovement : MonoBehaviour
                     //battleManager.StartBattle();
                 }
             }
+        }
+
+        if(rb.velocity.magnitude != 0 && !isWalking)
+        {
+            SoundManager.soundManagerInstace.PlaySound("Steps");
+            isWalking = true;
+        }
+        
+
+        if (rb.velocity.magnitude == 0)
+        {
+            isWalking = false;
+            SoundManager.soundManagerInstace.StopSound("Steps");
         }
     }
 

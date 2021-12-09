@@ -16,6 +16,8 @@ public class Pokemon : ScriptableObject
     public int level = 5;
     public Ability[] abilities = new Ability[4];
     public Ability currentAbility = null;
+
+    public AbillitiesEffect currentBeingAffectedBy;
 }
 
 public enum Type{
