@@ -127,7 +127,14 @@ public class BattleAnimator : MonoBehaviour
         PokemonName2.text = _character2.ActivePokemon.pokemonName;
         GameObject character2HP = transform
             .Find("BattleHeaders/EnemyHeader/PokemonHealth/HealthBar/BlackBackground/Health").gameObject;
+        //reset position
         character2HP.transform.localPosition = Vector3.zero;
+        
+        int damagePercentile =
+            (int) (((float) _character2.ActivePokemon.hp / (float) _character2.ActivePokemon.maxHp) * 100.0f);
+        Vector3 newPosition = character2HP.transform.localPosition;
+        newPosition.x -= (100 - damagePercentile);
+        character2HP.transform.localPosition = newPosition;
     }
     public void ChangePokemonCharacter1()
     {
@@ -136,7 +143,14 @@ public class BattleAnimator : MonoBehaviour
         PokemonName1.text = _character1.ActivePokemon.pokemonName;
         GameObject character1HP = transform
             .Find("BattleHeaders/PlayerHeader/PokemonHealth/HealthBar/BlackBackground/Health").gameObject;
+        //reset position
         character1HP.transform.localPosition = Vector3.zero;
+        
+        int damagePercentile =
+            (int) (((float) _character1.ActivePokemon.hp / (float) _character1.ActivePokemon.maxHp) * 100.0f);
+        Vector3 newPosition = character1HP.transform.localPosition;
+        newPosition.x -= (100 - damagePercentile);
+        character1HP.transform.localPosition = newPosition;
         
     }
 

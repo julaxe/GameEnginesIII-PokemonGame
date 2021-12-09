@@ -7,6 +7,7 @@ public class BattleState : IStateBase
     private Character _characterAttacking;
     private Character _characterGettingHit;
     private int damageCalculation;
+    private bool _changingPokemon = false;
 
     public override void OnEnterState(BattleManager battleManager)
     {
@@ -32,16 +33,24 @@ public class BattleState : IStateBase
             character2.ActivePokemon.currentAbility = character2.ActivePokemon.abilities[randomNumber];
         }
 
-        //check which pokemon goes first depending of speed.
-        if (character1.ActivePokemon.speed >= character2.ActivePokemon.speed)
+        if (character1.ActivePokemon.currentAbility.abilityName == "ChangePokemon")
         {
-            _character1GoesFirst = true;
             SetCharacterAttacking(character1);
+            _changingPokemon = true;
         }
         else
         {
-            _character1GoesFirst = false;
-            SetCharacterAttacking(character2);
+            //check which pokemon goes first depending of speed.
+            if (character1.ActivePokemon.speed >= character2.ActivePokemon.speed)
+            {
+                _character1GoesFirst = true;
+                SetCharacterAttacking(character1);
+            }
+            else
+            {
+                _character1GoesFirst = false;
+                SetCharacterAttacking(character2);
+            }
         }
     }
 
@@ -63,8 +72,82 @@ public class BattleState : IStateBase
     private void BattleSequence()
     {
         //character 1 attacks
-        
 
+
+        if (_changingPokemon)
+        {
+            switch (_sequenceNumber)
+            {
+                case 0:
+                    if (_characterAttacking.ActivePokemon.hp > 0)
+                    {
+                        _battleManager.GetBattleChatBox().WriteMessage(
+                                                                       "Come back! " +
+                                                                       _characterAttacking.ActivePokemon.pokemonName);
+                    }
+                    _sequenceNumber++;
+                    break;
+                case 1:
+                    if (!_battleManager.GetBattleChatBox().IsTyping())
+                    {
+                        if (_characterAttacking.ActivePokemon.hp > 0)
+                        {
+                            if (Input.GetKeyDown(KeyCode.Space))
+                            {
+                                _battleManager.GetBattleAnimator().StartQueueAnimation(new string[]
+                                {
+                                    "Character1Death"
+                                });
+                                _sequenceNumber++;
+                            }
+                        }
+                        else
+                        {
+                            _sequenceNumber++;
+                        }
+                    }
+
+                    break;
+                case 2:
+                    if (!_battleManager.GetBattleAnimator().IsQueuePlaying())
+                    {
+                        _characterAttacking.ActivePokemon =
+                            _characterAttacking.pokemons[_characterAttacking.ActivePokemon.currentAbility.damage];
+                        _battleManager.GetBattleChatBox().WriteMessage(
+                            "Go! " +
+                            _characterAttacking.ActivePokemon.pokemonName);
+                        _sequenceNumber++;
+                    }
+                    
+                    break;
+                case 3:
+                    if (!_battleManager.GetBattleChatBox().IsTyping())
+                    {
+                        if (Input.GetKeyDown(KeyCode.Space))
+                        {
+                            _battleManager.GetBattleAnimator().StartQueueAnimation(new string[]
+                            {
+                                "SwapPlayerPokemon"
+                            });
+                            _sequenceNumber++;
+                        }
+                    }
+                    break;
+                case 4:
+                    if (!_battleManager.GetBattleAnimator().IsQueuePlaying())
+                    {
+                        _changingPokemon = false;
+                        SetCharacterAttacking(character2);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            
+            return;
+        }
+        
         switch (_sequenceNumber)
         {
             //message saying the pokemon name and the ability that he's using

@@ -20,6 +20,7 @@ public class MenuState : IStateBase
         InitializeMenuOptionsButtons();
         InitializeAbilitiesButtons();
         FightButton.onClick.AddListener(Fight);
+        PokemonButton.onClick.AddListener(ChangePokemon);
         
         FightButton.Select();
     }
@@ -54,7 +55,11 @@ public class MenuState : IStateBase
         _battleManager.ShowBattleAbilities();
         
         Ability1Button.Select();
-        
+    }
+
+    private void ChangePokemon()
+    {
+        _battleManager.GetBattleStateMachine().ChangeStateByKey("ChangePokemonState");
     }
 
     public void UpdateAbilityStatus()
