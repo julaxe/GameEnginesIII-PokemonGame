@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,16 +12,16 @@ public class BattleAnimator : MonoBehaviour
     private Animator animator;
     private Character _character1;
     private Character _character2;
-    public Image ImageP1;
-    public Image ImageP2;
+    private Image ImageP1;
+    private Image ImageP2;
     public List<string> QueueClips;
     public bool _isUpdatingHP = false;
     public float _HPUpdatingSpeed = 0.01f;
     
-    public TMPro.TextMeshProUGUI PokemonName1;
-    public TMPro.TextMeshProUGUI PokemonName2;
-    public TMPro.TextMeshProUGUI PokemonLevel1;
-    public TMPro.TextMeshProUGUI PokemonLevel2;
+    private TMPro.TextMeshProUGUI PokemonName1;
+    private TMPro.TextMeshProUGUI PokemonName2;
+    private TMPro.TextMeshProUGUI PokemonLevel1;
+    private TMPro.TextMeshProUGUI PokemonLevel2;
 
     public bool isPlaying = false;
 
@@ -42,8 +44,23 @@ public class BattleAnimator : MonoBehaviour
 
         StartCoroutine(QueueAnimation(index + 1));
     }
-    
-    
+
+    private void Start()
+    {
+        ImageP1 = transform
+            .Find("PlayerUI").GetComponent<Image>();
+        ImageP2 = transform
+            .Find("EnemyUI").GetComponent<Image>();
+        PokemonName1 = transform
+            .Find("BattleHeaders/PlayerHeader/PokemonName/Text").GetComponent<TextMeshProUGUI>();
+        PokemonName2 = transform
+            .Find("BattleHeaders/EnemyHeader/PokemonName/Text").GetComponent<TextMeshProUGUI>();
+        PokemonLevel1 = transform
+            .Find("BattleHeaders/PlayerHeader/PokemonLevel/Text").GetComponent<TextMeshProUGUI>();
+        PokemonLevel2 = transform
+            .Find("BattleHeaders/EnemyHeader/PokemonLevel/Text").GetComponent<TextMeshProUGUI>();
+    }
+
     public bool IsQueuePlaying()
     {
         return isPlaying;
