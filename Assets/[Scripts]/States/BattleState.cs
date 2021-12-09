@@ -18,7 +18,6 @@ public class BattleState : IStateBase
         //AI here to pick an ability.
         if (character2 != null) //this means that we are against a character and not just a pokemon.
         {
-            character2.ActivePokemon = character2.pokemons[0];
             //for now we are just going to attack random.
 
             //set random number
@@ -198,9 +197,10 @@ public class BattleState : IStateBase
             case 5:
                 if (!_battleManager.GetBattleAnimator().IsQueuePlaying())
                 {
-                    foreach (Pokemon pokemon in _characterGettingHit.pokemons)
+                    for(int i = 0; i < 6; i++)
                     {
-                        if (pokemon.hp > 0)
+                        if (_characterGettingHit.pokemons[i] == null) continue;
+                        if (_characterGettingHit.pokemons[i].hp > 0)
                         {
                             if (_characterGettingHit == character1)
                             {
@@ -208,16 +208,15 @@ public class BattleState : IStateBase
                             }
                             else
                             {
-                                character2.ActivePokemon = pokemon;
-                                _battleManager.GetBattleChatBox().WriteMessage(character2.CharacterName + " sent out " + pokemon.pokemonName);
+                                _characterGettingHit.ActivePokemon = _characterGettingHit.pokemons[i];
+                                _battleManager.GetBattleChatBox().WriteMessage(character2.CharacterName + " sent out " + _characterGettingHit.pokemons[i]);
                                 _sequenceNumber++;
                             }
-                        }
-                        else
-                        {
-                            _battleManager.GetBattleStateMachine().ChangeStateByKey("FinalState");
+
+                            return;
                         }
                     }
+                    _battleManager.GetBattleStateMachine().ChangeStateByKey("FinalState");
                 }
 
                 break;

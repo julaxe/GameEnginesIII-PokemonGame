@@ -139,6 +139,11 @@ public class BattleAnimator : MonoBehaviour
         character1HP.transform.localPosition = Vector3.zero;
         
     }
+
+    public void SetEnemySprite()
+    {
+        ImageP2.sprite = _character2.sprite;
+    }
     public void ResumeGame()
     {
         Time.timeScale = 1.0f;
@@ -149,6 +154,6 @@ public class BattleAnimator : MonoBehaviour
 
     public void EndBattle()
     {
-        //animator.SetBool("endBattle", true);
+        ResumeGame();
     }
 }

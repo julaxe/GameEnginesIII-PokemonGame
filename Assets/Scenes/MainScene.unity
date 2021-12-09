@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 19125743}
   - component: {fileID: 19125744}
+  - component: {fileID: 19125745}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -164,6 +165,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd0cb245adf39544da2c61b288243060, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &19125745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 19125742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48efd41506ebf344aa570487e31c8fa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &67499330
@@ -4300,6 +4313,8 @@ MonoBehaviour:
   CharacterName: Lucas
   NPC: 1
   sprite: {fileID: 21300000, guid: ea25043cdf71995408dee9e6e57eb8d1, type: 3}
+  winPhrase: just a Default win phrase here
+  losePhrase: just a Default defeat phrase here
 --- !u!1 &393734478
 GameObject:
   m_ObjectHideFlags: 0
@@ -13650,6 +13665,8 @@ MonoBehaviour:
   CharacterName: Julian
   NPC: 0
   sprite: {fileID: 21300000, guid: 36cd684f7c76e3f44b34cea40e746501, type: 3}
+  winPhrase: just a Default win phrase here
+  losePhrase: just a Default defeat phrase here
 --- !u!1 &793226859
 GameObject:
   m_ObjectHideFlags: 0
@@ -28791,6 +28808,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2288281180613425402, guid: da4f33d538883d944bd4d7df613547e6, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2288281180613425402, guid: da4f33d538883d944bd4d7df613547e6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 197
+      objectReference: {fileID: 0}
+    - target: {fileID: 2288281180613425403, guid: da4f33d538883d944bd4d7df613547e6, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2288281180739070216, guid: da4f33d538883d944bd4d7df613547e6, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -28803,5 +28832,29 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 773781613}
+    - target: {fileID: 2288281181090210222, guid: da4f33d538883d944bd4d7df613547e6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2288281181302113522, guid: da4f33d538883d944bd4d7df613547e6, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2288281181302113533, guid: da4f33d538883d944bd4d7df613547e6, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2288281181302113533, guid: da4f33d538883d944bd4d7df613547e6, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -143
+      objectReference: {fileID: 0}
+    - target: {fileID: 2288281181302113533, guid: da4f33d538883d944bd4d7df613547e6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -111
+      objectReference: {fileID: 0}
+    - target: {fileID: 5889600657382236506, guid: da4f33d538883d944bd4d7df613547e6, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -684
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da4f33d538883d944bd4d7df613547e6, type: 3}
