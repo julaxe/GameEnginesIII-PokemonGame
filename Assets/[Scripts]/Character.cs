@@ -12,6 +12,8 @@ public class Character : MonoBehaviour
     public string CharacterName;
     public bool NPC = false;
     public Sprite sprite;
+    public string winPhrase = "just a Default win phrase here";
+    public string losePhrase = "just a Default lose phrase here";
 
     private void Start()
     {

@@ -9,6 +9,7 @@ public class BattleManager : MonoBehaviour
 {
     // Start is called before the first frame update
     private BattleAnimator _battleAnimator;
+    private GameObject _changePokemonUI;
     private BattleChatBox _battleChatBox = null;
     private Character _character1;
     private Character _character2;
@@ -20,6 +21,7 @@ public class BattleManager : MonoBehaviour
     {
         _battleChatBox = GameObject.Find("UI/Canvas/Battle/BattleChatBox").GetComponent<BattleChatBox>();
         _battleAnimator = GameObject.Find("UI/Canvas/Battle").GetComponent<BattleAnimator>();
+        _changePokemonUI = GameObject.Find("UI/Canvas/ChangePokemon");
         _battleStateMachine = GetComponent<StateManager>();
     }
 
@@ -106,6 +108,18 @@ public class BattleManager : MonoBehaviour
         _battleStateMachine.StartStateMachine("StartState");
     }
 
+    public void ShowChangePokemonUI(bool value)
+    {
+        _battleAnimator.gameObject.SetActive(!value);
+        _changePokemonUI.gameObject.SetActive(value);
+    }
+
+    public GameObject GetChangePokemonUI()
+    {
+        return _changePokemonUI;
+    }
+    
+    
     public BattleAnimator GetBattleAnimator()
     {
         return _battleAnimator;
