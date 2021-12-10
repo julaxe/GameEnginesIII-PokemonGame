@@ -10,6 +10,7 @@ public class MenuState : IStateBase
     private Button Ability1Button, Ability2Button, Ability3Button, Ability4Button;
     private GameObject abilityInfoGameObject;
     private TextMeshProUGUI PPCountText, TypeText;
+    private bool inAbilitiesMenu = false;
     
     public override void OnEnterState(BattleManager battleManager)
     {
@@ -21,6 +22,8 @@ public class MenuState : IStateBase
         InitializeAbilitiesButtons();
         FightButton.onClick.AddListener(Fight);
         PokemonButton.onClick.AddListener(ChangePokemon);
+        RunButton.onClick.AddListener(Run);
+        InsultButton.onClick.AddListener(Insult);
         
         FightButton.Select();
     }
@@ -29,6 +32,17 @@ public class MenuState : IStateBase
     {
         base.OnUpdateState();
         UpdateAbilityStatus();
+        if (inAbilitiesMenu)
+        {
+            if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Return))
+            {
+                inAbilitiesMenu = false;
+                _battleManager.ShowBattleOptions(); 
+                FightButton.Select();
+            }
+        }
+        
+        
     }
     public void Fight()
     {
@@ -50,8 +64,8 @@ public class MenuState : IStateBase
             character1.ActivePokemon.abilities[3]
                 ? character1.ActivePokemon.abilities[3].abilityName
                 : "";
-        
-        
+
+        inAbilitiesMenu = true;
         _battleManager.ShowBattleAbilities();
         
         Ability1Button.Select();
@@ -62,6 +76,14 @@ public class MenuState : IStateBase
         _battleManager.GetBattleStateMachine().ChangeStateByKey("ChangePokemonState");
     }
 
+    private void Run()
+    {
+        _battleManager.GetBattleStateMachine().ChangeStateByKey("RunState");
+    }
+    private void Insult()
+    {
+        _battleManager.GetBattleStateMachine().ChangeStateByKey("InsultState");
+    }
     public void UpdateAbilityStatus()
     {
         if (EventSystem.current.currentSelectedGameObject == Ability1Button.gameObject)

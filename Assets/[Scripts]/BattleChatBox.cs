@@ -11,6 +11,7 @@ namespace _Scripts_
         private GameObject _OBattleMessage;
         private GameObject _OBattleOptions;
         private GameObject _OAbilitiesOptions;
+        private GameObject _OBlinkingArrow;
 
         private TMPro.TextMeshProUGUI _currentText;
         private string _message;
@@ -23,9 +24,10 @@ namespace _Scripts_
             _OBattleMessage = transform.Find("BattleMessage").gameObject;
             _OBattleOptions = transform.Find("BattleOptions").gameObject;
             _OAbilitiesOptions = transform.Find("AbilitiesOptions").gameObject;
+            _OBlinkingArrow = _OBattleMessage.transform.Find("ArrowBlinking").gameObject;
             _currentText = _OBattleMessage.transform.Find("Text/TextMessage").GetComponent<TMPro.TextMeshProUGUI>();
         }
-
+        
         public GameObject GetBattleOptions()
         {
             return _OBattleOptions;
@@ -66,6 +68,7 @@ namespace _Scripts_
         IEnumerator TypeLine()
         {
             isTyping = true;
+            _OBlinkingArrow.gameObject.SetActive(false);
             foreach (char c in _message)
             {
                 _currentText.text += c;
@@ -73,6 +76,7 @@ namespace _Scripts_
             }
 
             isTyping = false;
+            _OBlinkingArrow.gameObject.SetActive(true);
         }
 
         public void SetChatBoxActive(GameObject gameObject)

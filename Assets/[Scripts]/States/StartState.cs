@@ -8,6 +8,8 @@ public class StartState : IStateBase
     {
         base.OnEnterState(battleManager);
         Debug.Log("Start State enter");
+        AnimationCounter = 0;
+        _battleManager.GetBattleChatBox().WriteMessage("");
         _battleManager.GetBattleAnimator().StartQueueAnimation(new string[]{
             "ShowBattle", 
             "SlideInPlayers"

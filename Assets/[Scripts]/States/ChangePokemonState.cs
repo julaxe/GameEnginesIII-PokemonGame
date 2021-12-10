@@ -34,6 +34,17 @@ public class ChangePokemonState : IStateBase
         _changePokemonAbility = ScriptableObject.CreateInstance<Ability>();
         _changePokemonAbility.abilityName = "ChangePokemon";
         
+        _pokemonSlot1.GetComponent<Button>().Select();
+
+    }
+
+    public override void OnUpdateState()
+    {
+        base.OnUpdateState();
+        if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Return))
+        {
+            _battleManager.GetBattleStateMachine().ChangeStateByKey("MenuState");
+        }
     }
 
     private void UpdateSlot(GameObject pokemonSlot, int pokemonNumber)
@@ -55,9 +66,17 @@ public class ChangePokemonState : IStateBase
 
     public void SetAbilityChangePokemon(int newPokemonNumber)
     {
-        _changePokemonAbility.damage = newPokemonNumber;
-        character1.ActivePokemon.currentAbility = _changePokemonAbility;
+        if (character1.pokemons[newPokemonNumber].hp > 0 && character1.pokemons[newPokemonNumber] != character1.ActivePokemon)
+        {
+            _changePokemonAbility.damage = newPokemonNumber;
+            character1.ActivePokemon.currentAbility = _changePokemonAbility;
+            _battleManager.GetBattleStateMachine().ChangeStateByKey("BattleState");
+        }
+    }
+
+    public override void OnExitState()
+    {
+        base.OnExitState();
         _battleManager.ShowChangePokemonUI(false);
-        _battleManager.GetBattleStateMachine().ChangeStateByKey("BattleState");
     }
 }

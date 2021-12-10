@@ -18,4 +18,4 @@ MonoBehaviour:
   accuracy: 100
   maxPP: 30
   pp: 30
-  Effect: {fileID: 11400000, guid: 04415320c79cf5d44a6ea6b844516e68, type: 2}
+  Effect: {fileID: 0}

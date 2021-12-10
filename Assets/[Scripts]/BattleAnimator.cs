@@ -86,6 +86,37 @@ public class BattleAnimator : MonoBehaviour
     {
         return _isUpdatingHP;
     }
+
+    public void UpdateCharacter1Status()
+    {
+        if (_character1.ActivePokemon.currentBeingAffectedBy == null) return;
+        
+        TextMeshProUGUI character1Status = transform
+            .Find("BattleHeaders/PlayerHeader/PokemonStatus/Text").GetComponent<TextMeshProUGUI>();
+        character1Status.text = GetThreeLettersFromEffect(_character1.ActivePokemon.currentBeingAffectedBy.effectType);
+    }
+    public void UpdateCharacter2Status()
+    {
+        if (_character2.ActivePokemon.currentBeingAffectedBy == null) return;
+        
+        TextMeshProUGUI character1Status = transform
+            .Find("BattleHeaders/EnemyHeader/PokemonStatus/Text").GetComponent<TextMeshProUGUI>();
+        character1Status.text = GetThreeLettersFromEffect(_character2.ActivePokemon.currentBeingAffectedBy.effectType);
+    }
+
+    public string GetThreeLettersFromEffect(EffectType type)
+    {
+        if (type == EffectType.BURN)
+        {
+            return "BRN";
+        }
+        if (type == EffectType.PARALIZE)
+        {
+            return "PAR";
+        }
+
+        return "";
+    }
     public void UpdateCharacter1HP(int damage)
     {
         GameObject character1HP = transform
@@ -125,6 +156,7 @@ public class BattleAnimator : MonoBehaviour
         ImageP2.sprite = _character2.ActivePokemon.image;
         PokemonLevel2.text = "Lv" + _character2.ActivePokemon.level.ToString();
         PokemonName2.text = _character2.ActivePokemon.pokemonName;
+        transform.Find("BattleHeaders/EnemyHeader/PokemonStatus/Text").GetComponent<TextMeshProUGUI>().text = "";
         GameObject character2HP = transform
             .Find("BattleHeaders/EnemyHeader/PokemonHealth/HealthBar/BlackBackground/Health").gameObject;
         //reset position
@@ -141,6 +173,7 @@ public class BattleAnimator : MonoBehaviour
         ImageP1.sprite = _character1.ActivePokemon.image;
         PokemonLevel1.text = "Lv" + _character1.ActivePokemon.level.ToString();
         PokemonName1.text = _character1.ActivePokemon.pokemonName;
+        transform.Find("BattleHeaders/PlayerHeader/PokemonStatus/Text").GetComponent<TextMeshProUGUI>().text = "";
         GameObject character1HP = transform
             .Find("BattleHeaders/PlayerHeader/PokemonHealth/HealthBar/BlackBackground/Health").gameObject;
         //reset position
