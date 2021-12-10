@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Burn
   description: Will Burn the enemy every round
-  chanceOfEffectApplied: 50
+  chanceOfEffectApplied: 100
   durationInRounds: 3
   damageOverRound: 10
   effectType: 1

@@ -6,8 +6,7 @@ public class FinalState : IStateBase
     {
         base.OnEnterState(battleManager);
         _battleManager.ShowBattleMessage();
-        
-        
+        _sequenceNumber = 0;
     }
 
     public override void OnUpdateState()

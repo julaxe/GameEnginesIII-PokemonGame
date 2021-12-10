@@ -71,9 +71,6 @@ public class BattleState : IStateBase
 
     private void BattleSequence()
     {
-        //character 1 attacks
-
-
         if (_changingPokemon)
         {
             switch (_sequenceNumber)
@@ -152,10 +149,24 @@ public class BattleState : IStateBase
         {
             //message saying the pokemon name and the ability that he's using
             case 0:
+                if (_characterAttacking.ActivePokemon.currentBeingAffectedBy != null &&_characterAttacking.ActivePokemon.currentBeingAffectedBy.effectType == EffectType.PARALIZE)
+                {
+                    if (Random.Range(0, 100) <
+                        _characterAttacking.ActivePokemon.currentBeingAffectedBy.chanceOfEffectApplied)
+                    {
+                        _battleManager.GetBattleChatBox().WriteMessage(
+                            _characterAttacking.ActivePokemon.pokemonName +
+                            " can't attack because is " +
+                            _characterAttacking.ActivePokemon.currentBeingAffectedBy.name);
+                        _sequenceNumber = 7;
+                        break;
+                    }
+                }
                 _battleManager.GetBattleChatBox().WriteMessage(_characterAttacking.ActivePokemon.pokemonName +
                                                                " used " +
-                                                               _characterAttacking.ActivePokemon.currentAbility);
+                                                               _characterAttacking.ActivePokemon.currentAbility.abilityName);
                 _sequenceNumber++;
+                
                 break;
             //battle animation.
             case 1:
@@ -189,7 +200,7 @@ public class BattleState : IStateBase
                 if (!_battleManager.GetBattleAnimator().IsQueuePlaying())
                 {
                     damageCalculation = _characterAttacking.ActivePokemon.attack +
-                                        _characterAttacking.ActivePokemon.currentAbility.damage;
+                                        _characterAttacking.ActivePokemon.currentAbility.damage - _characterGettingHit.ActivePokemon.defense;
                     string abilityEffectiveness =
                         _battleManager.GetTypeEffectiveness(_characterAttacking.ActivePokemon.currentAbility.type,
                             _characterGettingHit.ActivePokemon.type);
@@ -201,8 +212,7 @@ public class BattleState : IStateBase
                     {
                         damageCalculation /= 2;
                     }
-                    
-                    
+
                     _characterGettingHit.ActivePokemon.hp -= damageCalculation;
 
                     if (abilityEffectiveness != "")
@@ -237,24 +247,14 @@ public class BattleState : IStateBase
                 }
 
                 break;
+            
+            //check pokemon being hit status.
             case 4:
                 if (!_battleManager.GetBattleAnimator().IsUpdatingHP())
                 {
                     if (_characterGettingHit.ActivePokemon.hp > 0)
                     {
-                        if (_character1GoesFirst && _characterAttacking == character1)
-                        {
-                            SetCharacterAttacking(character2);
-                        }
-                        else if (!_character1GoesFirst && _characterAttacking == character2)
-                        {
-                            SetCharacterAttacking(character1);
-                        }
-                        else
-                        {
-                            //Go to main menu
-                            _battleManager.GetBattleStateMachine().ChangeStateByKey("MenuState");
-                        }
+                        _sequenceNumber++;//go to check effects
                     }
                     else
                     {
@@ -272,12 +272,146 @@ public class BattleState : IStateBase
                                 "Character2Death"
                             });
                         }
+
+                        _sequenceNumber = 8;//check pokemons available.
+                    }
+                }
+
+                break;
+            //Ability effects
+            case 5:
+                if (_characterAttacking.ActivePokemon.currentAbility.Effect != null)
+                {
+                    if (_characterAttacking.ActivePokemon.currentAbility.Effect.affectsTheEnemy)
+                    {
+                        if (Random.Range(0, 100) < _characterAttacking.ActivePokemon.currentAbility.Effect
+                            .chanceOfEffectApplied)
+                        {
+                            _characterGettingHit.ActivePokemon.ApplyEffect(_characterAttacking.ActivePokemon.currentAbility.Effect);
+                            if (_characterAttacking == character1)
+                            {
+                                _battleManager.GetBattleAnimator().UpdateCharacter2Status();
+                            }
+                            else
+                            {
+                                _battleManager.GetBattleAnimator().UpdateCharacter1Status();
+                            }
+                            _battleManager.GetBattleChatBox().WriteMessage(_characterGettingHit.ActivePokemon.pokemonName + " is being affected by " + _characterGettingHit.ActivePokemon.currentBeingAffectedBy.name);
+                        }
+                    }
+                    else //affects itself
+                    {
+                        if (_characterAttacking.ActivePokemon.currentAbility.Effect.effectType == EffectType.IMMUNITY)
+                        {
+                            if (_characterAttacking == character1)
+                            {
+                                _battleManager.GetBattleAnimator().UpdateCharacter1Status();
+                            }
+                            else
+                            {
+                                _battleManager.GetBattleAnimator().UpdateCharacter2Status();
+                            }
+                            _battleManager.GetBattleChatBox().WriteMessage(_characterAttacking.ActivePokemon.pokemonName + " is being affected by " + _characterGettingHit.ActivePokemon.currentAbility.Effect.name);
+                        }
+                    }
+                }
+                else
+                {
+                    if (_characterGettingHit.ActivePokemon.currentBeingAffectedBy != null)
+                    {
+                        _characterGettingHit.ActivePokemon.ApplyEffect(_characterGettingHit.ActivePokemon.currentBeingAffectedBy);
+                        _battleManager.GetBattleChatBox().WriteMessage(_characterGettingHit.ActivePokemon.pokemonName + " is being affected by " + _characterGettingHit.ActivePokemon.currentBeingAffectedBy.name);
+                    }
+                   
+                    if (_characterAttacking == character1)
+                    {
+                        _battleManager.GetBattleAnimator().UpdateCharacter1Status();
+                    }
+                    else
+                    {
+                        _battleManager.GetBattleAnimator().UpdateCharacter2Status();
+                    }
+                    
+                    
+                }
+                _sequenceNumber++;
+
+                break;
+            //apply effect damage if there is
+            case 6:
+                if (!_battleManager.GetBattleChatBox().IsTyping())
+                {
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        if (_characterGettingHit.ActivePokemon.currentBeingAffectedBy != null &&
+                            _characterGettingHit.ActivePokemon.currentBeingAffectedBy.damageOverRound > 0)
+                        {
+                            float percentile =
+                                ((float) _characterGettingHit.ActivePokemon.currentBeingAffectedBy.damageOverRound / (float) _characterGettingHit.ActivePokemon.maxHp) *
+                                100.0f;
+                            if (_characterGettingHit == character1)
+                            {
+                                _battleManager.GetBattleAnimator().UpdateCharacter1HP((int) percentile);
+                            }
+                            else
+                            {
+                                _battleManager.GetBattleAnimator().UpdateCharacter2HP((int) percentile);
+                            }
+
+                        }
                         _sequenceNumber++;
                     }
                 }
 
                 break;
-            case 5:
+            //check if pokemons are alive.
+            case 7:
+                if (!_battleManager.GetBattleChatBox().IsTyping() && !_battleManager.GetBattleAnimator().IsUpdatingHP())
+                {
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        //if after effects it's still alive.
+                        if (_characterGettingHit.ActivePokemon.hp > 0)
+                        {
+                            if (_character1GoesFirst && _characterAttacking == character1)
+                            {
+                                SetCharacterAttacking(character2);
+                            }
+                            else if (!_character1GoesFirst && _characterAttacking == character2)
+                            {
+                                SetCharacterAttacking(character1);
+                            }
+                            else
+                            {
+                                //Go to main menu
+                                _battleManager.GetBattleStateMachine().ChangeStateByKey("MenuState");
+                            }
+                        }
+                        else
+                        {
+                            if (_characterGettingHit == character1)
+                            {
+                                _battleManager.GetBattleAnimator().StartQueueAnimation(new string[]
+                                {
+                                    "Character1Death"
+                                });
+                            }
+                            else
+                            {
+                                _battleManager.GetBattleAnimator().StartQueueAnimation(new string[]
+                                {
+                                    "Character2Death"
+                                });
+                            }
+
+                            _sequenceNumber = 8; //check pokemons available.
+                        }
+                    }
+                }
+
+                break;
+            //check if there are more pokemons available  (this is when pokemon died).
+            case 8:
                 if (!_battleManager.GetBattleAnimator().IsQueuePlaying())
                 {
                     for(int i = 0; i < 6; i++)
@@ -303,7 +437,7 @@ public class BattleState : IStateBase
                 }
 
                 break;
-            case 6:
+            case 9:
                 if (!_battleManager.GetBattleChatBox().IsTyping())
                 {
                     if (Input.GetKeyDown(KeyCode.Space))
@@ -317,7 +451,7 @@ public class BattleState : IStateBase
                 }
 
                 break;
-            case 7:
+            case 10:
                 if (!_battleManager.GetBattleAnimator().IsQueuePlaying())
                 {
                     _battleManager.GetBattleStateMachine().ChangeStateByKey("MenuState");

@@ -18,6 +18,25 @@ public class Pokemon : ScriptableObject
     public Ability currentAbility = null;
 
     public AbillitiesEffect currentBeingAffectedBy;
+    private int roundOnEffect;
+    
+
+    public void ApplyEffect(AbillitiesEffect effect)
+    {
+        if (currentBeingAffectedBy != effect) // it's a new effect
+        {
+            currentBeingAffectedBy = effect;
+            roundOnEffect = 1;
+        }
+        else
+        {
+            roundOnEffect += 1;
+            if (roundOnEffect > effect.durationInRounds)
+            {
+                currentBeingAffectedBy = null;
+            }
+        }
+    }
 }
 
 public enum Type{
