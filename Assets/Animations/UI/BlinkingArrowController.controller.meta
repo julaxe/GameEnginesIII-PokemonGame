@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/[GameObjects]/Pokemons/TiredFire-weak.asset.meta
+guid: 6ed10a32550712c49b7c32c0e1549772
+=======
 guid: 5a850911667d179478a10b2d28df093c
+>>>>>>> 69eb60a1d077d540d2dfb83a1680d1fb52d2947b:Assets/Animations/UI/BlinkingArrowController.controller.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 9100000
