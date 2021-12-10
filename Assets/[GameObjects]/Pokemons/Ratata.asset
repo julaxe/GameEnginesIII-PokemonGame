@@ -27,3 +27,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3558a51539998e4419d17ffed6bd8620, type: 2}
   - {fileID: 0}
   currentAbility: {fileID: 0}
+  currentBeingAffectedBy: {fileID: 0}
