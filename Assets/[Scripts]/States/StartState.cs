@@ -6,6 +6,11 @@ public class StartState : IStateBase
     private int AnimationCounter = 0;
     public override void OnEnterState(BattleManager battleManager)
     {
+
+        SoundManager.soundManagerInstace.StopSound("Steps");
+        SoundManager.soundManagerInstace.StopSound("Background");
+        SoundManager.soundManagerInstace.PlaySound("Battle");
+
         base.OnEnterState(battleManager);
         Debug.Log("Start State enter");
         AnimationCounter = 0;

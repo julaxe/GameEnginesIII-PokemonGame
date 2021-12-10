@@ -311,7 +311,7 @@ public class BattleState : IStateBase
                             {
                                 _battleManager.GetBattleAnimator().UpdateCharacter2Status();
                             }
-                            _battleManager.GetBattleChatBox().WriteMessage(_characterAttacking.ActivePokemon.pokemonName + " is being affected by " + _characterGettingHit.ActivePokemon.currentAbility.Effect.name);
+                            _battleManager.GetBattleChatBox().WriteMessage(_characterAttacking.ActivePokemon.pokemonName + " is being affected by " + _characterAttacking.ActivePokemon.currentAbility.Effect.name);
                         }
                     }
                 }

@@ -140,5 +140,8 @@ public class BattleManager : MonoBehaviour
     public void EndBattle()
     {
         _battleAnimator.EndBattle();
+        SoundManager.soundManagerInstace.StopSound("Battle");
+        SoundManager.soundManagerInstace.PlaySound("Background");
+
     }
 }
