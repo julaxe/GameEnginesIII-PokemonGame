@@ -426,7 +426,7 @@ public class BattleState : IStateBase
                             else
                             {
                                 _characterGettingHit.ActivePokemon = _characterGettingHit.pokemons[i];
-                                _battleManager.GetBattleChatBox().WriteMessage(character2.CharacterName + " sent out " + _characterGettingHit.pokemons[i]);
+                                _battleManager.GetBattleChatBox().WriteMessage(character2.CharacterName + " sent out " + _characterGettingHit.pokemons[i].pokemonName);
                                 _sequenceNumber++;
                             }
 
